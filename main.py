@@ -19,9 +19,9 @@ def play(speed):
 
     grabbed, frame = stream.read()
     if not grabbed:
-        window.quit()  # Fixed exit method
+        window.quit()  
     
-    frame = imutils.resize(frame, width=SET_WIDTH,height=SET_HEIGHT)  # Removed unsupported height argument
+    frame = imutils.resize(frame, width=SET_WIDTH,height=SET_HEIGHT) 
     frame = PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(frame))
     canvas.image = frame
     canvas.create_image(0, 0, image=frame, anchor=tkinter.NW)
@@ -31,19 +31,25 @@ def play(speed):
     flag = not flag  
 
 def out():
-    thread = threading.Thread(target=pending, args=("out", SET_WIDTH, SET_HEIGHT))  # Fixed args
+    thread = threading.Thread(target=pending, args=("out", SET_WIDTH, SET_HEIGHT)) 
     thread.daemon = 1
     thread.start()
     print("Player is OUT")
 
 def not_out():
-    thread = threading.Thread(target=pending, args=("not_out", SET_WIDTH, SET_HEIGHT))  # Fixed args
+    thread = threading.Thread(target=pending, args=("not_out", SET_WIDTH, SET_HEIGHT))  
     thread.daemon = 1
     thread.start()
     print("Player is NOT OUT")
 
 
 def pending(decision, w, h):
+    # steps
+    # 1) show decision pending
+    # 2) wait 1 s
+    # 3) show ad png
+    # 4) wait 1.5 s
+    # 5) show result (out or not out)
     frame = cv2.cvtColor(cv2.imread("DECISION PENDING PS.png"), cv2.COLOR_BGR2RGB)
     frame = imutils.resize(frame, width=w)
     frame = PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(frame))
@@ -58,7 +64,7 @@ def pending(decision, w, h):
     canvas.create_image(0, 0, image=frame, anchor=tkinter.NW)
     time.sleep(1.5)
 
-    decisionImg = "OUT DESIGN PS.png" if decision == "out" else "NOT OUT DESIGN PS.png"
+    decisionImg = "OUT DESIGN PS.png" if decision == "out" else "NOT OUT DESIGN PS.png"   
     frame = cv2.cvtColor(cv2.imread(decisionImg), cv2.COLOR_BGR2RGB)  
     frame = imutils.resize(frame, width=w)
     frame = PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(frame))
@@ -82,7 +88,7 @@ SET_HEIGHT = 368
 
 # Initialize Tkinter window
 window = tkinter.Tk()
-window.title("Archiver 3rd Umpire Decision Review Kit")
+window.title("3rd Umpire Decision Review Kit")
 
 # Load and process image
 cv_img = cv2.cvtColor(cv2.imread("FINAL DRS FRONT.png"), cv2.COLOR_BGR2RGB)
